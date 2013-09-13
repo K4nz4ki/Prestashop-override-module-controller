@@ -2,33 +2,6 @@
 
 class Dispatcher extends DispatcherCore
 {
-    /**
-     * Load custom modules routes
-     */
-//     protected function loadRoutesModules() {
-      
-//         foreach(Module::getModulesDirOnDisk() As $module) {
-//             if(Module::isInstalled($module)) {                
-//                 require_once( _PS_MODULE_DIR_.$module.'/'.$module.'.php' );
-//                 $reflect = new ReflectionClass($module);
-//                 $default = $reflect->getDefaultProperties();
-             	
-      
-//                 if (isset($default['moduleRoutes'])) {
-//                     foreach ($default['moduleRoutes'] AS $routeName => $routes) {
-//                         $this->default_routes[$routeName] = $routes;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-    
-//     protected function loadRoutes()
-//     {
-//         $this->loadRoutesModules();
-//         parent::loadRoutes();
-//     }
-
 	public function dispatch()
 	{
 		$controller_class = '';
@@ -50,12 +23,11 @@ class Dispatcher extends DispatcherCore
 					$controllers = Dispatcher::getControllers(_PS_MODULE_DIR_.$module_name.'/controllers/front/');
 					if (isset($controllers[$this->controller]))
 					{
-						// Require ModuleOverrie
+						// Require ModuleFrontControllerOverrie
 						require_once 'ModuleFrontControllerOverride.php';
 						// and load the right classes (child and mother or just the mother)
 						ModuleFrontControllerOverride::load($module_name, $this->controller);
 	
-						//include_once(_PS_MODULE_DIR_.$module_name.'/controllers/front/'.$this->controller.'.php');
 						$controller_class = $module_name.$this->controller.'ModuleFrontController';
 					}
 				}
